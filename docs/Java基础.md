@@ -43,3 +43,14 @@
 TreeMap基于红黑树（Red-Black tree）实现。映射根据其键的自然顺序进行排序，或者根据创建映射时提供的 Comparator 进行排序，具体取决于使用的构造方法。TreeMap的基本操作containsKey、get、put、remove方法，它的时间复杂度是log(N)。
 
 TreeMap包含几个重要的成员变量：root、size、comparator。其中root是红黑树的根节点。它是Entry类型，Entry是红黑树的节点，它包含了红黑树的6个基本组成：key、value、left、right、parent和color。Entry节点根据根据Key排序，包含的内容是value。Entry中key比较大小是根据比较器comparator来进行判断的。size是红黑树的节点个数。
+
+
+### Java基本数据类型
+- byte：1字节（8位），数据范围是 -2^7 ~ 2^7-1。
+- short：2字节（16位），数据范围是 -2^15 ~ 2^15-1。
+- int：4字节（32位），数据范围是 -2^31 ~ 2^31-1。
+- long：8字节（64位），数据范围是 -2^63 ~ 2^63-1。
+- float：4字节（32位），数据范围大约是 -3.4*10^38 ~ 3.4*10^38。
+- double：8字节（64位），数据范围大约是 -1.8*10^308 ~ 1.8*10^308。
+- char：2字节（16位），数据范围是 \u0000 ~ \uffff。
+- boolean：Java规范没有明确的规定，不同的JVM有不同的实现机制。
