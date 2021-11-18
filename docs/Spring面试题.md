@@ -57,6 +57,13 @@ Spring使用了三级缓存解决了循环依赖的问题。在populateBean()给
 3. BeanFactoryPostProcessor：Bean工厂的后置处理器，在bean定义(bean definitions)加载完成后，bean尚未初始化前执行。
 4. BeanDefinitionRegistryPostProcessor：继承于BeanFactoryPostProcessor。其自定义的方法postProcessBeanDefinitionRegistry会在bean定义(bean definitions)将要加载，bean尚未初始化前真执行，即在BeanFactoryPostProcessor的postProcessBeanFactory方法前被调用。
 
+## Spring Boot的核心注解
+@SpringBootApplication注解包含
+- @Configuration：允许在上下文中注册额外的 bean 或导入其他配置类
+- @EnableAutoConfiguration：启用 SpringBoot 的自动配置机制
+- @ComponentScan：扫描被@Component (@Service,@Controller)注解的 bean，注解默认会扫描启动类所在的包下所有的类 ，可以自定义不扫描某些 bean
+
+
 ### Spring MVC的工作流程（源码层面）
 
 参考文章：[自己写个Spring MVC](https://zhuanlan.zhihu.com/p/139751932)
