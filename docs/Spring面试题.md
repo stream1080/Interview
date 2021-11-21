@@ -57,19 +57,27 @@ Spring使用了三级缓存解决了循环依赖的问题。在populateBean()给
 3. BeanFactoryPostProcessor：Bean工厂的后置处理器，在bean定义(bean definitions)加载完成后，bean尚未初始化前执行。
 4. BeanDefinitionRegistryPostProcessor：继承于BeanFactoryPostProcessor。其自定义的方法postProcessBeanDefinitionRegistry会在bean定义(bean definitions)将要加载，bean尚未初始化前真执行，即在BeanFactoryPostProcessor的postProcessBeanFactory方法前被调用。
 
+## Spring Boot的核心注解
+@SpringBootApplication注解包含
+- @Configuration：允许在上下文中注册额外的 bean 或导入其他配置类
+- @EnableAutoConfiguration：启用 SpringBoot 的自动配置机制
+- @ComponentScan：扫描被@Component (@Service,@Controller)注解的 bean，注解默认会扫描启动类所在的包下所有的类 ，可以自定义不扫描某些 bean
+
+## Spring、springMVC、Spring Boot
+Spring是一个轻量级的控制反转(IoC)和面向切面(AOP)的容器框架。Spring使你能够编写更干净、更可管理、并且更易于测试的代码。
+
+Spring MVC是Spring的一个模块，一个web框架。通过Dispatcher Servlet, ModelAndView 和 View Resolver，开发web应用变得很容易。主要针对的是网站应用程序或者服务开发——URL路由、Session、模板引擎、静态Web资源等等。
+
+Spring配置复杂，繁琐，所以推出了Spring boot，约定优于配置，简化了spring的配置流程。
+
+Spring Cloud构建于Spring Boot之上，是一个关注全局的服务治理框架。
+
+- Spring是核心，提供了基础功能；
+- Spring MVC 是基于Spring的一个 MVC 框架 ；
+- Spring Boot 是为简化Spring配置的快速开发整合包；
+- Spring Cloud是构建在Spring Boot之上的服务治理框架。
+
+
 ### Spring MVC的工作流程（源码层面）
 
 参考文章：[自己写个Spring MVC](https://zhuanlan.zhihu.com/p/139751932)
-
-### Spring Boot 自动装配
-1. 通过各种注解实现了类与类之间的依赖关系，容器在启动的时候Application.run，会调用EnableAutoConfigurationImportSelector.class的selectImports方法（其实是其父类的方法）--这里需要注意，调用这个方法之前发生了什么和是在哪里调用这个方法需要进一步的探讨
-
-2. selectImports方法最终会调用SpringFactoriesLoader.loadFactoryNames方法来获取一个全面的常用BeanConfiguration列表
-
-3. loadFactoryNames方法会读取FACTORIES_RESOURCE_LOCATION（也就是spring-boot-autoconfigure.jar 下面的spring.factories），获取到所有的Spring相关的Bean的全限定名ClassName，大概120多个
-
-4. selectImports方法继续调用filter(configurations, autoConfigurationMetadata);这个时候会根据这些BeanConfiguration里面的条件，来一一筛选，最关键的是
-@ConditionalOnClass，这个条件注解会去classpath下查找，jar包里面是否有这个条件依赖类，所以必须有了相应的jar包，才有这些依赖类，才会生成IOC环境需要的一些默认配置Bean
-
-5. 最后把符合条件的BeanConfiguration注入默认的EnableConfigurationPropertie类里面的属性值，并且注入到IOC环境当中
-
