@@ -60,3 +60,16 @@ Spring使用了三级缓存解决了循环依赖的问题。在populateBean()给
 ### Spring MVC的工作流程（源码层面）
 
 参考文章：[自己写个Spring MVC](https://zhuanlan.zhihu.com/p/139751932)
+
+### Spring Boot 自动装配
+1. 通过各种注解实现了类与类之间的依赖关系，容器在启动的时候Application.run，会调用EnableAutoConfigurationImportSelector.class的selectImports方法（其实是其父类的方法）--这里需要注意，调用这个方法之前发生了什么和是在哪里调用这个方法需要进一步的探讨
+
+2. selectImports方法最终会调用SpringFactoriesLoader.loadFactoryNames方法来获取一个全面的常用BeanConfiguration列表
+
+3. loadFactoryNames方法会读取FACTORIES_RESOURCE_LOCATION（也就是spring-boot-autoconfigure.jar 下面的spring.factories），获取到所有的Spring相关的Bean的全限定名ClassName，大概120多个
+
+4. selectImports方法继续调用filter(configurations, autoConfigurationMetadata);这个时候会根据这些BeanConfiguration里面的条件，来一一筛选，最关键的是
+@ConditionalOnClass，这个条件注解会去classpath下查找，jar包里面是否有这个条件依赖类，所以必须有了相应的jar包，才有这些依赖类，才会生成IOC环境需要的一些默认配置Bean
+
+5. 最后把符合条件的BeanConfiguration注入默认的EnableConfigurationPropertie类里面的属性值，并且注入到IOC环境当中
+
