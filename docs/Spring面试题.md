@@ -63,15 +63,15 @@ Spring使用了三级缓存解决了循环依赖的问题。在populateBean()给
 - @EnableAutoConfiguration：启用 SpringBoot 的自动配置机制
 - @ComponentScan：扫描被@Component (@Service,@Controller)注解的 bean，注解默认会扫描启动类所在的包下所有的类 ，可以自定义不扫描某些 bean
 
-## Spring、springMVC、Spring Boot
-Spring是一个轻量级的控制反转(IoC)和面向切面(AOP)的容器框架。Spring使你能够编写更干净、更可管理、并且更易于测试的代码。
+## Spring、SpringMVC、Spring Boot、Spring Cloud
+- Spring是一个轻量级的控制反转(IoC)和面向切面(AOP)的容器框架。Spring使你能够编写更干净、更可管理、并且更易于测试的代码。
 
-Spring MVC是Spring的一个模块，一个web框架。通过Dispatcher Servlet, ModelAndView 和 View Resolver，开发web应用变得很容易。主要针对的是网站应用程序或者服务开发——URL路由、Session、模板引擎、静态Web资源等等。
+- Spring MVC是Spring的一个模块，一个web框架。通过Dispatcher Servlet, ModelAndView 和 View Resolver，开发web应用变得很容易。主要针对的是网站应用程序或者服务开发——URL路由、Session、模板引擎、静态Web资源等等。
 
-Spring配置复杂，繁琐，所以推出了Spring boot，约定优于配置，简化了spring的配置流程。
+- Spring配置复杂，繁琐，所以推出了Spring boot，约定优于配置，简化了spring的配置流程。
 
-Spring Cloud构建于Spring Boot之上，是一个关注全局的服务治理框架。
-
+- Spring Cloud构建于Spring Boot之上，是一个关注全局的服务治理框架。
+### 总结
 - Spring是核心，提供了基础功能；
 - Spring MVC 是基于Spring的一个 MVC 框架 ；
 - Spring Boot 是为简化Spring配置的快速开发整合包；
