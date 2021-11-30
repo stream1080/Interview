@@ -12,11 +12,26 @@
 
 Spring使用了三级缓存解决了循环依赖的问题。在populateBean()给属性赋值阶段里面Spring会解析你的属性，并且赋值，当发现，A对象里面依赖了B，此时又会走getBean方法，但这个时候，你去缓存中是可以拿的到的。因为我们在对createBeanInstance对象创建完成以后已经放入了缓存当中，所以创建B的时候发现依赖A，直接就从缓存中去拿，此时B创建完，A也创建完，一共执行了4次。至此Bean的创建完成，最后将创建好的Bean放入单例缓存池中。（非单例的实例作用域是不允许出现循环依赖）
 
-### BeanFactory和ApplicationContext的区别
+## BeanFactory和ApplicationContext的区别
 
 1. BeanFactory是Spring里面最低层的接口，提供了最简单的容器的功能，只提供了实例化对象和拿对象的功能。
 2. ApplicationContext应用上下文，继承BeanFactory接口，它是Spring的一各更高级的容器，提供了更多的有用的功能。如国际化，访问资源，载入多个（有继承关系）上下文 ，使得每一个上下文都专注于一个特定的层次，消息发送、响应机制，AOP等。
 3. BeanFactory在启动的时候不会去实例化Bean，中有从容器中拿Bean的时候才会去实例化。ApplicationContext在启动的时候就把所有的Bean全部实例化了。它还可以为Bean配置lazy-init=true来让Bean延迟实例化
+
+#### BeanFactory
+- BeanFactory是一个Bean工厂，使用简单工厂模式，是Spring IoC容器顶级接口，可以理解为含有Bean集合的工厂类，
+- 作用是管理Bean，包括实例化、定位、配置对象及建立这些对象间的依赖。
+- BeanFactory实例化后并不会自动实例化Bean，只有当Bean被使用时才实例化与装配依赖关系，属于延迟加载，适合多例模式。
+
+#### FactoryBean
+- FactoryBean是一个工厂Bean，使用了工厂方法模式，
+- 作用是生产其他Bean实例，可以通过实现该接口，提供一个工厂方法来自定义实例化Bean的逻辑。
+- FactoryBean 接口由BeanFactory中配置的对象实现，这些对象本身就是用于创建对象的工厂，如果一个Bean实现了这个接口，那么它就是创建对象的工厂Bean， 而不是Bean实例本身。
+#### ApplicationConext
+- ApplicationConext是BeanFactory的子接口，扩展了BeanFactory的功能，提供了支持国际化的文本消息，统一的资源文件读取方式，事件传播以及应用层的特别配置等。
+- 容器会在初始化时对配置的Bean进行预实例化，Bean的依赖注入在容器初始化时就已经完成，属于立即加载，适合单例模式，一般推荐使用。
+
+
 
 ### 动态代理的实现方式，AOP的实现方式
 
