@@ -99,7 +99,9 @@ AQS有两个队列，同步对列和条件队列。同步队列依赖一个双�
 
 ### 线程池的正确创建方式
 
-不能用Executors，newFixed和newSingle，因为队列无限大，容易造成耗尽资源和OOM，newCached和newScheduled最大线程数是Integer.MAX_VALUE，线程创建过多和OOM。应该通过ThreadPoolExecutor手动创建。
+- 不能用Executors，newFixed和newSingle，因为队列无限大，容易造成耗尽资源和OOM;
+- newCached和newScheduled最大线程数是Integer.MAX_VALUE，线程创建过多和OOM;
+- 应该通过ThreadPoolExecutor手动创建, 根据业务自定义线程池的八项参数。
 
 ### 线程提交submit()和execute()有什么区别
 
